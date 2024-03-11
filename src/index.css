@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: whitesmoke;
 }
 
 :root {
@@ -7,8 +8,21 @@ body {
   --secondary: #f7846d;
 }
 
-.gradient {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.loginPage {
+.gradient {
+  background: rgb(247, 109, 111);
+  background: linear-gradient(
+    90deg,
+    rgba(247, 109, 111, 1) 0%,
+    rgba(247, 132, 109, 1) 100%
+  );
+}
+
+.app-header {
+  height: 50px;
 }

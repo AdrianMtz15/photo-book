@@ -1,10 +1,15 @@
+import { Box } from "@mui/material";
 import "./App.css";
-import Login from "./views/Login";
+import Header from "./components/Header";
+import PhotoGrid from "./views/PhotoGrid";
 
 function App() {
   return (
     <>
-      <Login />
+      <Box sx={{}}>
+        <Header />
+        <PhotoGrid />
+      </Box>
     </>
   );
 }
