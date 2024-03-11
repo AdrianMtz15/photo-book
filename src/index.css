@@ -1,8 +1,14 @@
+body {
+  margin: 0;
+}
+
 :root {
   --primary: #f76d6f;
-  --secondary: #f7846d ;
+  --secondary: #f7846d;
 }
 
 .gradient {
+}
 
+.loginPage {
 }

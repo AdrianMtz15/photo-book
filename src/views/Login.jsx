@@ -1,0 +1,90 @@
+import React, { useState } from "react";
+import { TextField, Button, Typography, Container, Grid } from "@mui/material";
+
+import Image from "../assets/loginBackground.jpg";
+
+const Login = () => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passCodeError, setPassCodeError] = useState(false);
+  const passCode = "abc123";
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    // Reset passCode error when input changes
+    setPassCodeError(false);
+  };
+
+  const styles = {
+    loginContainer: {
+      backgroundImage: `url(${Image})`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "1rem",
+    },
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Name:", name);
+    console.log("Password:", password);
+
+    // Check passCode
+    if (password !== passCode) {
+      setPassCodeError(true);
+      return;
+    }
+
+    // If passCode is correct, continue with login logic
+    // For example, submit the form or navigate to a new page
+  };
+
+  return (
+    <Container style={styles.loginContainer}>
+      <form onSubmit={handleSubmit}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Ingresa tu nombre y el código de acceso
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              type="text"
+              label="Nombre"
+              variant="outlined"
+              fullWidth
+              value={name}
+              onChange={handleNameChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              type="password"
+              label="Código de Ingreso"
+              variant="outlined"
+              fullWidth
+              value={password}
+              onChange={handlePasswordChange}
+              error={passCodeError}
+              helperText={passCodeError ? "Código incorrecto" : ""}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Login
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
+  );
+};
+
+export default Login;
