@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import "./App.css";
 import Header from "./components/Header";
 import PhotoGrid from "./views/PhotoGrid";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Box sx={{}}>
         <Header />
         <PhotoGrid />
+        <Navbar/>
       </Box>
     </>
   );

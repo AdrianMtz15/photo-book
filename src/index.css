@@ -23,6 +23,14 @@ body {
   );
 }
 
+.text-gradient {
+  fill: linear-gradient(
+    90deg,
+    rgba(247, 109, 111, 1) 0%,
+    rgba(247, 132, 109, 1) 100%
+  ) !important;
+}
+
 .app-header {
   height: 50px;
 }

@@ -37,6 +37,9 @@ const PhotoGrid = () => {
       title: 'random img'
     },
   ];
+
+
+
   return(
     <Box
       component={'div'}
@@ -74,7 +77,7 @@ const PhotoGrid = () => {
         startIcon={<CloudUploadIcon/>}
         sx={{
           position: 'fixed',
-          bottom: 10,
+          bottom: 70,
         }}
       >
         Cargar Foto
