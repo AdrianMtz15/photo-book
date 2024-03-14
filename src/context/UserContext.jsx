@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from "react";
 import { LOGIN, SHOW_SPINNER, HIDE_SPINNER } from "../types";
 import UserReducer from "../reducers/UserReducer";
 import AuthService from "../services/AuthService";
+import UserService from "../services/UserService";
 
 const initialState = {
   user: null,
@@ -15,10 +16,13 @@ export const UserProvider = ({ children }) => {
   function userLoggedIn() {
     dispatch({ type: SHOW_SPINNER });
     AuthService.userLoggedIn(
-      (user) => {
-        dispatch({
-          type: LOGIN,
-          payload: user,
+      () => {
+        UserService.getCurrentUser().then((res) => {
+          const { user } = res.data;
+          dispatch({
+            type: LOGIN,
+            payload: user,
+          });
         });
       },
       (error) => {
@@ -33,10 +37,12 @@ export const UserProvider = ({ children }) => {
   }
 
   function signOut() {
-    window.localStorage.clear();
+    AuthService.signOut();
   }
 
-  function signUp(name, email) {}
+  function signUp() {
+    AuthService.signInAnonimously();
+  }
 
   return (
     <UserContext.Provider

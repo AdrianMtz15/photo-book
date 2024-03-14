@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
 import { IonContent, IonGrid, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
-import { Container, Grid, TextField } from "@mui/material";
-import Login from "../views/Login";
 
 const MobileModal = () => {
   const [name, setName] = useState("");

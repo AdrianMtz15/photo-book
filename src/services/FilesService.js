@@ -3,7 +3,8 @@ import api from "./api";
 const route = "/files";
 
 const FilesService = {
-  getFile: () => api.get(route),
+  getFiles: () => api.get(route),
+  getSingleFile: (file_id) => api.get(`${route}/${file_id}`),
   getFormData: (file) => {
     const formData = new FormData();
     formData.append("file", file);

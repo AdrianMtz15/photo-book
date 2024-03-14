@@ -5,29 +5,7 @@ moment.locale("es", {
   weekdaysShort: "Lun_Mar_Mie_Jue_Vie_Sab_Dom".split("_"),
 });
 
-const paypal_dev_key =
-  "AX-1lDAl3DdCeZ1wa_PTH8jBry2OmlUs6lrbSp2T42FRjvuLRPRAahCZHz1_V665R-U5WINWXVVdALxd";
-
-const paypal_live_key =
-  "AU94SbddKFHy_FYksRQCQ2XZGHLOW3DVCcKrew5-egkqAWmJKfEpJSycBH5Ntydtxxj40PHJHjV2pQF-";
-
-const paypal_client_id =
-  process.env.NODE_ENV === "development" ? paypal_dev_key : paypal_live_key;
-
-const stripe_dev_key =
-  "pk_test_51HmStSKPpBTzo0mTCB7a2Q2Z4J9Yf3BGd5bchAesEpIRJxCMpx4v0odIPAkFb3FL8Rag1LUrhzd5LdDVnMQJRyMl00jVajqjeq";
-
-const stripe_live_key =
-  "pk_live_51HmStSKPpBTzo0mTpATTVNNwELwTTGVUaGhmtDzjRT0B4jYGJjcEPbolxOcgdMXeJDT0Ifo5jilJIM0fa9dnKJv900JzvGv6LA";
-
-export const S3_ENDPOINT = "https://thebodymethod.s3.us-west-1.amazonaws.com";
-
-export const STRIPE_KEY =
-  process.env.NODE_ENV === "development" ? stripe_dev_key : stripe_live_key;
-
-export const HOME_URL = "https://thebodymethod.mx";
-
-export const PAYPAL_URL = `https://www.paypal.com/sdk/js?client-id=${paypal_client_id}&vault=true&intent=subscription`;
+export const S3_ENDPOINT = "https://andreayjuanma.s3.us-west-1.amazonaws.com";
 
 export const SOCKET_URL =
   process.env.NODE_ENV === "development"
