@@ -18,6 +18,11 @@ body {
 }
 /* Buttons */
 
+.label-text .sc-ion-input-ios {
+    color: #835529 !important;
+}
+  
+
 .btn-primary {
     background-color: var(--primary) !important;
     border: 2px solid var(--primary) !important;    

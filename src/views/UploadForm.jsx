@@ -94,7 +94,7 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
   };
 
   const renderName = () => {
-    if (user.name === null || editName) {
+    if (user?.name === null || editName) {
       return (
         <div>
           <label>Nombre</label>
@@ -110,7 +110,7 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
     return (
       <div className="row align-items-center">
         <div className="col-9">
-          <span>{user.name}</span>
+          <span>{user?.name}</span>
         </div>
         <div className="col-3">
           <button

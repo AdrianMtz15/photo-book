@@ -5,6 +5,7 @@ import { PostsProvider } from "./context/PostsContext";
 import Main from "./views/Main";
 import { FilesProvider } from "./context/FilesContext";
 
+
 function App() {
   return (
     <ModalProvider>

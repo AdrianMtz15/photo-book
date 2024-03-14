@@ -6,6 +6,8 @@ import { FilesContext } from "../context/FilesContext";
 import { styled } from "@mui/material/styles";
 import UploadForm from "./UploadForm";
 import { S3_ENDPOINT } from "../utils";
+import { ModalContext } from "../context/ModalContext";
+import FilesPreview from "../components/FilesPreview";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -21,14 +23,22 @@ const VisuallyHiddenInput = styled("input")({
 
 const PhotoGrid = () => {
   const { posts, getPosts } = useContext(PostsContext);
+  const { modalComponent } = useContext(ModalContext);
   const { clearUploads } = useContext(FilesContext);
   const [srcSet, setSrcSet] = useState([]);
   const [files, setFiles] = useState([]);
   const [page, setPage] = useState(0);
+  
 
   useEffect(() => {
     fetchPosts();
   }, [page]);
+
+  useEffect(() => {
+    if (srcSet.length > 0) {
+      modalComponent("Subir Recuerdos", <FilesPreview files={srcSet} />);
+    }
+  }, [srcSet]);
 
   useEffect(() => {
     handleFilesPreview();
@@ -166,7 +176,7 @@ const PhotoGrid = () => {
       }}
     >
       {renderPosts()}
-      {renderFiles()}
+      {/* {renderFiles()} */}
       {renderButton()}
     </Box>
   );
