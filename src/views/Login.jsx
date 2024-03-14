@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Typography, Container, Grid } from "@mui/material";
 
 import Image from "../assets/loginBackground.jpg";
@@ -6,7 +6,10 @@ import Image from "../assets/loginBackground.jpg";
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
   const [passCodeError, setPassCodeError] = useState(false);
+  
   const passCode = "abc123";
 
   const handleNameChange = (event) => {
@@ -17,6 +20,11 @@ const Login = () => {
     setPassword(event.target.value);
     // Reset passCode error when input changes
     setPassCodeError(false);
+  };
+
+
+  const handleChangeMessage = (event) => {
+    setMessage(event.target.value);
   };
 
   const styles = {
@@ -64,6 +72,7 @@ const Login = () => {
               onChange={handleNameChange}
             />
           </Grid>
+          
           <Grid item xs={12}>
             <TextField
               type="password"
@@ -74,6 +83,18 @@ const Login = () => {
               onChange={handlePasswordChange}
               error={passCodeError}
               helperText={passCodeError ? "Código incorrecto" : ""}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Mensaje para los novios"
+              multiline
+              variant="outlined"
+              fullWidth
+              value={message}
+              onChange={handleChangeMessage}
+              rows={5}
             />
           </Grid>
           <Grid item xs={12}>
