@@ -1,39 +1,37 @@
 import React from "react";
+import { Grid } from "@mui/material";
 
-const FilesPreview = ({ files, handleDelete }) => {
+const FilesPreview = ({ files }) => {
   const renderFiles = () => {
     if (files.length > 0) {
-      return (
-        <div>
-          {files.map(({ type, src }, index) => {
-            if (type === "image") {
-              return (
-                <div key={index} className="position-relative d-inline-block">
-                  <img src={src} className="thumbnail mx-2 br-10" />
-                  <button
-                    style={{ position: "absolute", top: -15, right: -5 }}
-                    className="btn text-danger"
-                    onClick={() => handleDelete(index)}
-                  >
-                    <i className="fa fa-times"></i>
-                  </button>
-                </div>
-              );
-            } else if (type === "video") {
-              return (
-                <div key={index} className="position-relative d-inline-block">
-                  <video className="thumbnail mx-2 br-10">
-                    <source src={src} type="video/mp4" />
-                  </video>
-                </div>
-              );
-            }
-          })}
-        </div>
-      );
+      return files.map(({ type, src }, index) => {
+        if (type === "image") {
+          return (
+            <div key={index} className="col-4 col-md-3">
+              <img
+                src={src}
+                loading="lazy"
+                className="mw-100 w-100 d-block m-auto"
+              />
+            </div>
+          );
+        } else if (type === "video") {
+          return (
+            <div key={index} className="col-4 col-md-3">
+              <video className="w-100 w-100 d-block m-auto mx-2 br-10">
+                <source src={src} type="video/mp4" />
+              </video>
+            </div>
+          );
+        }
+      });
     }
   };
-  return <div>{renderFiles()}</div>;
+  return (
+    <div className="container-fluid">
+      <div className="row">{renderFiles()}</div>
+    </div>
+  );
 };
 
 export default FilesPreview;

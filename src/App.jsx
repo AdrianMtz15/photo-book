@@ -3,14 +3,17 @@ import { UserProvider } from "./context/UserContext";
 import { ModalProvider } from "./context/ModalContext";
 import { PostsProvider } from "./context/PostsContext";
 import Main from "./views/Main";
+import { FilesProvider } from "./context/FilesContext";
 
 function App() {
   return (
     <ModalProvider>
       <UserProvider>
-        <PostsProvider>
-          <Main />
-        </PostsProvider>
+        <FilesProvider>
+          <PostsProvider>
+            <Main />
+          </PostsProvider>
+        </FilesProvider>
       </UserProvider>
     </ModalProvider>
   );

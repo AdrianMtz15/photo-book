@@ -13,8 +13,6 @@ const MobileModal = () => {
     showModal,
   } = useContext(ModalContext);
 
-  console.log(showModal);
-
   const handleCancel = () => {
     clearModal();
     if (typeof onCancel === "function") {
