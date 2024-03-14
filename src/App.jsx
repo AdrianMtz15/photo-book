@@ -4,6 +4,7 @@ import { ModalProvider } from "./context/ModalContext";
 import { PostsProvider } from "./context/PostsContext";
 import Main from "./views/Main";
 
+
 function App() {
   return (
     <ModalProvider>

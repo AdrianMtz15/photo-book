@@ -1,12 +1,11 @@
+
 body {
   margin: 0;
   background-color: whitesmoke;
+  display: block;
+  position: relative;
 }
 
-:root {
-  --primary: #f76d6f;
-  --secondary: #f7846d;
-}
 
 * {
   margin: 0;
@@ -22,6 +21,7 @@ body {
     rgba(247, 132, 109, 1) 100%
   );
 }
+
 
 .text-gradient {
   fill: linear-gradient(
@@ -367,8 +367,8 @@ html {
 }
 
 .thumbnail {
-  width: 75px;
-  height: 75px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
 }
 

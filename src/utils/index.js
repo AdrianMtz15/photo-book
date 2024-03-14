@@ -31,11 +31,11 @@ export const PAYPAL_URL = `https://www.paypal.com/sdk/js?client-id=${paypal_clie
 
 export const SOCKET_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:4000"
+    ? "http://localhost:4001"
     : "https://thebodymethod.mx";
 
 export const BASE_URL =
-  (process.env.NODE_ENV === "development" ? "http://localhost:4000" : "") +
+  (process.env.NODE_ENV === "development" ? "http://localhost:4001" : "") +
   "/api";
 
 export const searchRows = (query, rows) => {
@@ -124,7 +124,7 @@ export const showModal = () => {
     newButton.setAttribute("data-target", "#modal");
     newButton.setAttribute("data-bs-toggle", "modal");
     newButton.setAttribute("data-bs-target", "#modal");
-    newButton.style.visibility = "hidden";
+    newButton.style.display = "none";
     document.body.appendChild(newButton);
     newButton.click();
   }

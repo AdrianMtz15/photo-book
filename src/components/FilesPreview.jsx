@@ -1,15 +1,12 @@
-import React from "react";
 
 const FilesPreview = ({ files, handleDelete }) => {
   const renderFiles = () => {
     if (files.length > 0) {
-      return (
-        <div>
-          {files.map(({ type, src }, index) => {
+      return files.map(({ type, src }, index) => {
             if (type === "image") {
               return (
                 <div key={index} className="position-relative d-inline-block">
-                  <img src={src} className="thumbnail mx-2 br-10" />
+                  <img src={src} className="thumbnail mx-2 br-10 mb-3" />
                   <button
                     style={{ position: "absolute", top: -15, right: -5 }}
                     className="btn text-danger"
@@ -22,18 +19,17 @@ const FilesPreview = ({ files, handleDelete }) => {
             } else if (type === "video") {
               return (
                 <div key={index} className="position-relative d-inline-block">
-                  <video className="thumbnail mx-2 br-10">
+                  <video className="thumbnail mx-2 br-10 mb-3">
                     <source src={src} type="video/mp4" />
                   </video>
                 </div>
               );
             }
-          })}
-        </div>
-      );
+          })
+      }
     }
-  };
-  return <div>{renderFiles()}</div>;
+
+  return <div className="d-flex flex-wrap justify-content-evenly mt-3">{renderFiles()}</div>;
 };
 
 export default FilesPreview;

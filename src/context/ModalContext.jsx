@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import ModalReducer from "../reducers/ModalReducer";
 import {
   SHOW_MODAL,
@@ -15,7 +15,7 @@ import { showModal } from "../utils";
 
 const initialState = {
   response: "",
-  show: false,
+  showModal: false,
   content: "",
   callback: "",
 };

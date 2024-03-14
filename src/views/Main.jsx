@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import PhotoGrid from "./PhotoGrid";
 import Landing from "./Landing";
