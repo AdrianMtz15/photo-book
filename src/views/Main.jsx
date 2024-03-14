@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserContext";
 import PhotoGrid from "./PhotoGrid";
 import Landing from "./Landing";
 import MobileModal from "../components/MobileModal";
+import InstagramWidget from "./InstagramWidget";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);
@@ -13,9 +14,10 @@ const Main = () => {
 
   return (
     <div>
-      <Landing />
+      {/* <Landing /> */}
       <PhotoGrid />
-      <MobileModal />
+      {/* <MobileModal /> */}
+      <InstagramWidget />
     </div>
   );
 };
