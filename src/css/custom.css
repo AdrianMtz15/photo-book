@@ -1,5 +1,5 @@
 body {
-    background: url("https://andreayjuanma.s3.us-west-1.amazonaws.com/background-transparent.png");
+    background: url("https://andreayjuanma.s3.us-west-1.amazonaws.com/background-transparent.png") !important;
     overflow: scroll;
     height: 100vh;
 }

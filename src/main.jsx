@@ -5,6 +5,7 @@ import "./index.css";
 import "./css/fonts.css";
 import "./css/custom.css";
 import "./css/colors.css";
+import "@ionic/react/css/core.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";

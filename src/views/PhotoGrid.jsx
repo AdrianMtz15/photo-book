@@ -3,6 +3,8 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useContext, useState, useEffect } from "react";
 import { PostsContext } from "../context/PostsContext";
 import { styled } from "@mui/material/styles";
+import FilesPreview from "../components/FilesPreview";
+import { ModalContext } from "../context/ModalContext";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -17,6 +19,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const PhotoGrid = () => {
+  const { modalComponent } = useContext(ModalContext);
   const { posts, getPosts } = useContext(PostsContext);
   const [srcSet, setSrcSet] = useState([]);
   const [files, setFiles] = useState([]);
@@ -29,6 +32,12 @@ const PhotoGrid = () => {
   useEffect(() => {
     handleFilesPreview();
   }, [files]);
+
+  useEffect(() => {
+    if (srcSet.length > 0) {
+      modalComponent("Subir Recuerdos", <FilesPreview files={srcSet} />);
+    }
+  }, [srcSet]);
 
   const handleFilesPreview = () => {
     const result = [];
@@ -120,39 +129,6 @@ const PhotoGrid = () => {
     );
   };
 
-  const renderFiles = () => {
-    if (srcSet.length > 0) {
-      return (
-        <div>
-          {srcSet.map(({ type, src }, index) => {
-            if (type === "image") {
-              return (
-                <div key={index} className="position-relative d-inline-block">
-                  <img src={src} className="thumbnail mx-2 br-10" />
-                  <button
-                    style={{ position: "absolute", top: -15, right: -5 }}
-                    className="btn text-danger"
-                    onClick={() => removeFile(index)}
-                  >
-                    <i className="fa fa-times"></i>
-                  </button>
-                </div>
-              );
-            } else if (type === "video") {
-              return (
-                <div key={index} className="position-relative d-inline-block">
-                  <video className="thumbnail mx-2 br-10">
-                    <source src={src} type="video/mp4" />
-                  </video>
-                </div>
-              );
-            }
-          })}
-        </div>
-      );
-    }
-  };
-
   return (
     <Box
       component={"div"}
@@ -163,7 +139,6 @@ const PhotoGrid = () => {
         justifyContent: "center",
       }}
     >
-      {renderFiles()}
       <Button
         className="gradient"
         component="label"

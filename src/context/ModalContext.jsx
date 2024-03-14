@@ -11,7 +11,7 @@ import {
   CLEAR_SUCCESS,
   CLEAR_MODAL,
 } from "../types";
-import { hideModal, showModal } from "../utils";
+import { showModal } from "../utils";
 
 const initialState = {
   response: "",
@@ -51,6 +51,7 @@ export const ModalProvider = ({ children }) => {
   }
 
   function modalComponent(title, component, options) {
+    console.log(title);
     let payload = { title, component };
     if (options && options !== null && typeof options === "object") {
       payload = { ...payload, ...options };
@@ -72,7 +73,7 @@ export const ModalProvider = ({ children }) => {
   }
 
   function clearModal() {
-    dispatch({ type: CLEAR_MODAL, payload: { callback: hideModal } });
+    dispatch({ type: CLEAR_MODAL });
   }
 
   function clearSuccess() {

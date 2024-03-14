@@ -27,6 +27,7 @@ const ModalReducer = function (state, { type, payload }) {
     case SET_RESPONSE:
       return { ...state, response: payload };
     case MODAL_COMPONENT:
+      console.log(payload);
       return {
         ...state,
         showModal: true,
@@ -54,7 +55,9 @@ const ModalReducer = function (state, { type, payload }) {
     case CLEAR_ALERT:
       return { ...state, showAlert: false, alertContent: "" };
     case CLEAR:
-      return { ...state, show: false,
+      return {
+        ...state,
+        show: false,
         no_padding: false,
         size: "",
         centered: false,
@@ -63,7 +66,8 @@ const ModalReducer = function (state, { type, payload }) {
         component: "",
         title: "",
         onClose: "",
-        callback: "", };
+        callback: "",
+      };
     case SHOW_SUCCESS:
       return { ...state, showSuccess: true, successContent: payload };
     case CLEAR_SUCCESS:
