@@ -1,0 +1,39 @@
+:root {
+    --dark: #000;
+    --primary: #835529;
+    --primary-light: #fdc169;
+}
+
+body {
+    color: #5C5954;
+}
+
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+/* Text */
+
+.text-primary {
+    color: var(--primary) !important;
+}
+/* Buttons */
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border: 2px solid var(--primary) !important;    
+    color: white !important;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: var(--primary-light) !important;
+    border: 2px solid var(--primary) !important;    
+    color: var(--primary) !important;
+    text-transform: uppercase;
+    font-weight: 800;
+}

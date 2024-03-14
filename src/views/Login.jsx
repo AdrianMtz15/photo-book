@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { TextField, Button, Typography, Container, Grid } from "@mui/material";
 
-import Image from "../assets/loginBackground.jpg";
-
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const [passCodeError, setPassCodeError] = useState(false);
-  
+
   const passCode = "abc123";
 
   const handleNameChange = (event) => {
@@ -22,21 +20,15 @@ const Login = () => {
     setPassCodeError(false);
   };
 
-
   const handleChangeMessage = (event) => {
     setMessage(event.target.value);
   };
 
   const styles = {
     loginContainer: {
-      backgroundImage: `url(${Image})`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      height: "100vh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      padding: "1rem",
     },
   };
 
@@ -58,7 +50,7 @@ const Login = () => {
   return (
     <Container style={styles.loginContainer}>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h1" align="center" gutterBottom>
           Ingresa tu nombre y el código de acceso
         </Typography>
         <Grid container spacing={2}>
@@ -72,7 +64,6 @@ const Login = () => {
               onChange={handleNameChange}
             />
           </Grid>
-          
           <Grid item xs={12}>
             <TextField
               type="password"
