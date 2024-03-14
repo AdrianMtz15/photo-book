@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
-import { IonContent, IonGrid, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
+import { IonContent, IonGrid, IonHeader, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
+import ProgressBar from "./ProgressBar";
 
 const MobileModal = () => {
   const [name, setName] = useState("");
+  const [spinner, setSpinner] = useState(false);
 
   const {
     title,
@@ -13,6 +15,13 @@ const MobileModal = () => {
     clearModal,
     onCancel,
     showModal,
+  } = useContext(ModalContext);
+
+  const {
+    total, 
+    uploadedCount, 
+    setTotalFiles, 
+    fileUploaded
   } = useContext(ModalContext);
 
 
@@ -33,6 +42,17 @@ const MobileModal = () => {
     setName(event.target.value);
   };
 
+  const renderProgress = () => {
+    if (spinner) {
+      const progress = (uploadedCount / total) * 100;
+      return (
+        <div className="mb-3">
+          <ProgressBar progress={progress} />
+        </div>
+      );
+    }
+  };
+
   return (
     <>
     <IonModal
@@ -41,10 +61,17 @@ const MobileModal = () => {
       breakpoints={[0.9, 0.95]}
       onDidDismiss={handleCancel}
     >
-      <IonContent className="py-4 ps-4 bg-white">
-        <IonGrid>
-          <div className="p-3">
-            {title && title !== "" ? <h2 className="text-primary text-center">{title}</h2> : ""}
+
+      <IonContent className="py-4 ps-4 bg-white ">
+   
+
+        <IonGrid class=" h-100">
+
+          <IonGrid class="pt-4">
+            {title && title !== "" ? <h2 className="text-primary h-auto text-center">{title}</h2> : ""}
+          </IonGrid>
+          
+          <div className="p-3 pt-0 ">
             {content}
             {component}
             {children}
@@ -78,6 +105,9 @@ const MobileModal = () => {
                 ></IonTextarea>
               </IonItem>
             </IonList>
+
+            {renderProgress()}
+
             {/* <IonInput
               // className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
               type="email"

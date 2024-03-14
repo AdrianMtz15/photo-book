@@ -51,7 +51,6 @@ export const ModalProvider = ({ children }) => {
   }
 
   function modalComponent(title, component, options) {
-    console.log(title);
     let payload = { title, component };
     if (options && options !== null && typeof options === "object") {
       payload = { ...payload, ...options };
