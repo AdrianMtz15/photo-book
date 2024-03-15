@@ -13,7 +13,7 @@ export default function useLocalStorage() {
   }, []);
 
   useEffect(() => {
-    console.log(storage);
+    // if()
   }, [storage]);
 
   const getCurrentLocalStorage = () => {

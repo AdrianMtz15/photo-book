@@ -24,15 +24,18 @@ const VisuallyHiddenInput = styled("input")({
 const PhotoGrid = () => {
   const { posts, getPosts } = useContext(PostsContext);
   const { modalComponent, showModal } = useContext(ModalContext);
-  const { clearUploads } = useContext(FilesContext);
-  const [srcSet, setSrcSet] = useState([]);
-  const [files, setFiles] = useState([]);
+  const { clearUploads, srcSet, setSrcSet, inputFiles, setInputFiles, getFiles, files } = useContext(FilesContext);
   const [page, setPage] = useState(0);
   
 
   useEffect(() => {
     fetchPosts();
+    getFiles();
   }, [page]);
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   useEffect(() => {
     if (srcSet.length > 0) {
@@ -42,15 +45,15 @@ const PhotoGrid = () => {
 
   useEffect(() => {
     handleFilesPreview();
-  }, [files]);
+  }, [inputFiles]);
 
   const fetchPosts = () => getPosts({ page });
 
   const handleFilesPreview = () => {
     const result = [];
     const promises = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    for (let i = 0; i < inputFiles.length; i++) {
+      const file = inputFiles[i];
       if (file.type.includes("image")) {
         promises.push(
           new Promise((resolve, reject) => {
@@ -84,7 +87,7 @@ const PhotoGrid = () => {
   };
 
   const handleFiles = (e) => {
-    setFiles(e.target.files);
+    setInputFiles(e.target.files);
   };
 
   const handleCancel = () => {
@@ -126,10 +129,10 @@ const PhotoGrid = () => {
   };
 
   const renderPosts = () => {
-    if (Array.isArray(posts)) {
+    if (Array.isArray(files) && files.length > 0) {
       return (
         <ImageList variant="masonry" cols={3} gap={8} sx={{ paddingX: "10px" }}>
-          {posts.map((item) => (
+          {files.map((item) => (
             <ImageListItem
               key={item.file_id}
               style={{

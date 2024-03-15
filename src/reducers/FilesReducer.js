@@ -6,6 +6,8 @@ import {
   SET_TOTAL_FILES,
   FILE_UPLOADED,
   CLEAR_UPLOADS,
+  SET_SRC_SET,
+  SET_INPUT_FILES,
 } from "../types/files";
 
 const schema = {};
@@ -14,6 +16,10 @@ const filesReducer = (state, { type, payload }) => {
   switch (type) {
     case CLEAR_UPLOADS:
       return { ...state, uploaded: [], uploadedCount: 0, total: 0 };
+    case SET_SRC_SET:
+      return { ...state, srcSet: payload };
+    case SET_INPUT_FILES:
+      return { ...state, inputFiles: payload };
     case SET_TOTAL_FILES: {
       let total = payload;
       if (Array.isArray(total) || total.length) {

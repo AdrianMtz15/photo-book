@@ -6,3 +6,5 @@ export const CLEAR_UPLOADS = "CLEAR_UPLOADS";
 export const FILES_RECEIVED = "FILES_RECEIVED";
 export const SET_TOTAL_FILES = "SET_TOTAL_FILES";
 export const SET_PROPERTY_FILE = "SET_PROPERTY_FILE";
+export const SET_SRC_SET = "SET_SRC_SET";
+export const SET_INPUT_FILES = "SET_INPUT_FILES";

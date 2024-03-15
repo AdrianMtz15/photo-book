@@ -56,20 +56,23 @@ export const PostsProvider = ({ children }) => {
     dispatch({ type: SET_PROPERTY_POST, payload: { key, value } });
   };
 
-  const savePost = (post, callback) => {
+  const savePost = async (post, callback) => {
     dispatch({ type: SHOW_SPINNER });
     let service = PostsService.putPost;
+
     if (isNaN(parseInt(post.post_id))) {
       service = PostsService.postPost;
     }
-    service(post)
-      .then(() => {
+
+    return await service(post)
+      .then((res) => {
         success("Post saved.");
         dispatch({ type: HIDE_SPINNER });
         clearModal();
         if (typeof callback === "function") {
           callback();
         }
+        return res.data.post;
       })
       .catch((error) => {
         dispatch({ type: HIDE_SPINNER });

@@ -4,13 +4,16 @@ import { IonApp, IonButton, IonContent, IonGrid, IonHeader, IonInput, IonItem, I
 import ProgressBar from "./ProgressBar";
 import { UserContext } from "../context/UserContext";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { FilesContext } from "../context/FilesContext";
+import { PostsContext } from "../context/PostsContext";
+import FilesService from "../services/FilesService";
 
 const MobileModal = () => {
   const [name, setName] = useState("");
-  const [validName, setValidName] = useState(false);
   const [content, setContent] = useState("");
   const [spinner, setSpinner] = useState(false);
   const [needLogin, setNeedLogin] = useState(false);
+  const [page, setPage] = useState(0);
 
 
   const {
@@ -24,13 +27,16 @@ const MobileModal = () => {
   } = useContext(ModalContext);
 
   const { user, signUp } = useContext(UserContext);
+  const { srcSet, setSrcSet, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
+  const { savePost, getPosts, posts } = useContext(PostsContext);
 
   const { saveData, storage } = useLocalStorage();
 
 
   useEffect(() => {
-    console.log(storage);
   }, []);
+
+  const fetchPosts = () => getPosts({ page });
 
 
   // useEffect(() => {
@@ -57,19 +63,90 @@ const MobileModal = () => {
     }
   }
 
+  const handleSignUp = async () => {
+    const {
+      token,
+      userId
+    } = await signUp(name);
+
+    // saveData({
+    //   ...storage,
+    //   userId,
+    //   token
+    // });
+
+    return userId;
+  }
+
+
+  const handleCreatePost = async (userId) => {
+    const newPost = await savePost({
+      user_id: userId,
+      content
+    })
+
+    return newPost;
+  }
+
+  const handleSaveFiles = (post_id, user_id) => {
+    console.log(inputFiles);
+  }
+
+  const handleCallback = () => {
+    clearUploads();
+    setSrcSet([]);
+    fetchPosts();
+  };
+
+  const handleUpload = async (user_id, post_id) => {
+    const promises = [];
+    setSpinner(true);
+    setTotalFiles(inputFiles);
+
+    for (let i = 0; i < inputFiles.length; i++) {
+      const file = inputFiles[i];
+      const fileData = {
+        user_id,
+        post_id
+      }
+
+      const formData = FilesService.getFormData(file, fileData);
+      
+      promises.push(
+        new Promise((resolve, reject) => {
+          FilesService.postFile(formData)
+            .then((res) => {
+              const { file_id } = res.data;
+
+              fileUploaded(res.data.file);
+              resolve();
+            })
+            .catch(reject);
+        })
+      );
+    }
+
+    await Promise.all(promises);
+
+
+    handleCallback();
+  }
+
+
 
   const handleSave = async () => {
+    let currentUserId;
+
     if(validateName()) {
       // setSpinner(true);
-
-      if(storage.userId === null) {
-        const token = await signUp();
-        
-        saveData({
-          ...storage,
-          userId: token
-        })
+      if(storage.userId === null || storage.userId === undefined) {
+        currentUserId = await handleSignUp();
+      } else {
+        currentUserId = storage.userId;
       }
+
+      const currentPost = await handleCreatePost(currentUserId);
+      await handleUpload(currentUserId, currentPost.post_id);
 
     }
   };
@@ -114,12 +191,11 @@ const MobileModal = () => {
 
             <div className="p-3 pt-0 overflow-scroll" style={{flex: 1}}>
               {component}
-              {children}
 
               <IonList>
                 <IonItem>
                   <IonInput 
-                    onIonChange={handleChangeName}
+                    onIonInput={handleChangeName}
                     value={name}
                     label="Nombre del Invitado" 
                     labelPlacement="floating" 
@@ -130,7 +206,7 @@ const MobileModal = () => {
 
                 <IonItem>
                   <IonTextarea
-                    onIonChange={handleChangeContent}
+                    onIonInput={handleChangeContent}
                     placeholder="Comentario (opcional)"
                     autoGrow={true}
                     value={content}

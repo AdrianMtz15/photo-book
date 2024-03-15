@@ -46,7 +46,6 @@ const Main = () => {
         {renderContent()}
         <MobileModal />
       </div>
-
     </IonApp>
   );
 };
