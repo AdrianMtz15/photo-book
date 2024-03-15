@@ -19,7 +19,6 @@ const MobileModal = () => {
   const {
     title,
     component,
-    children,
     clearModal,
     showModal,
     total, 
@@ -29,9 +28,7 @@ const MobileModal = () => {
   const { user, signUp } = useContext(UserContext);
   const { srcSet, setSrcSet, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
   const { savePost, getPosts, posts } = useContext(PostsContext);
-
   const { saveData, storage } = useLocalStorage();
-
 
   useEffect(() => {
   }, []);
@@ -78,7 +75,6 @@ const MobileModal = () => {
     return userId;
   }
 
-
   const handleCreatePost = async (userId) => {
     const newPost = await savePost({
       user_id: userId,
@@ -86,10 +82,6 @@ const MobileModal = () => {
     })
 
     return newPost;
-  }
-
-  const handleSaveFiles = (post_id, user_id) => {
-    console.log(inputFiles);
   }
 
   const handleCallback = () => {
@@ -131,8 +123,6 @@ const MobileModal = () => {
 
     handleCallback();
   }
-
-
 
   const handleSave = async () => {
     let currentUserId;
