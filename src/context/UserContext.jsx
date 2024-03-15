@@ -1,8 +1,9 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { LOGIN, SHOW_SPINNER, HIDE_SPINNER } from "../types";
 import UserReducer from "../reducers/UserReducer";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const initialState = {
   user: null,
@@ -12,8 +13,17 @@ export const UserContext = createContext(initialState);
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
+  const { storage } = useLocalStorage();
+
+  useEffect(() => { 
+    userLoggedIn()
+  }, [storage])
 
   function userLoggedIn() {
+    if(storage.token && storage.token.length > 0) {
+      AuthService.setToken(storage.token);
+    }
+
     // dispatch({ type: SHOW_SPINNER });
     // AuthService.userLoggedIn(
     //   () => {
