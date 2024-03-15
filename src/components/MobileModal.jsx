@@ -58,17 +58,17 @@ const MobileModal = () => {
   }
 
 
-  const handleSave = () => {
-    console.log('handle save');
-    console.log(name);
-    console.log(validateName());
-    console.log(storage);
-
+  const handleSave = async () => {
     if(validateName()) {
-      setSpinner(true);
+      // setSpinner(true);
 
       if(storage.userId === null) {
-        signUp()
+        const token = await signUp();
+        
+        saveData({
+          ...storage,
+          userId: token
+        })
       }
 
     }
@@ -79,9 +79,7 @@ const MobileModal = () => {
   };
 
   const handleChangeName = (event) => {
-    console.log(event);
     const value = event.target.value;
-    console.log(value);
     setName(value);
   };
 
@@ -120,11 +118,11 @@ const MobileModal = () => {
 
               <IonList>
                 <IonItem>
-                  <input 
-                    onChange={handleChangeName}
+                  <IonInput 
+                    onIonChange={handleChangeName}
                     value={name}
                     label="Nombre del Invitado" 
-                    // labelPlacement="floating" 
+                    labelPlacement="floating" 
                     type="text"
                     size={24}
                   />
@@ -132,7 +130,7 @@ const MobileModal = () => {
 
                 <IonItem>
                   <IonTextarea
-                    onChange={handleChangeContent}
+                    onIonChange={handleChangeContent}
                     placeholder="Comentario (opcional)"
                     autoGrow={true}
                     value={content}

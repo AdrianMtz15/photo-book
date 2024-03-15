@@ -39,10 +39,11 @@ export const UserProvider = ({ children }) => {
     AuthService.signOut();
   }
 
-  function signUp() {
-    AuthService.signInAnonimously();
+  async function signUp() {
+    const token = await AuthService.signInAnonimously()
+    return token;
   }
-
+  
   return (
     <UserContext.Provider
       value={{

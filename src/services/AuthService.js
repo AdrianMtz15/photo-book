@@ -24,8 +24,11 @@ const AuthService = {
   signInAnonimously: () =>
     auth
     .signInAnonymously()
-    .then(res => {
-      console.log(res);
+    .then(user => {
+      return getToken().then((token) => {
+        api.defaults.headers.common["Authorization"] = token;
+        return token;
+      });
     }).catch(err => {
       console.log(err);
     })
