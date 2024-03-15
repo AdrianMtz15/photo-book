@@ -29,7 +29,6 @@ export const UserProvider = ({ children }) => {
         if (error) {
           alert(error);
           AuthService.signOut();
-          navigate("/entrar");
         }
         dispatch({ type: HIDE_SPINNER });
       }

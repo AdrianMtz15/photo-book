@@ -23,7 +23,7 @@ const VisuallyHiddenInput = styled("input")({
 
 const PhotoGrid = () => {
   const { posts, getPosts } = useContext(PostsContext);
-  const { modalComponent } = useContext(ModalContext);
+  const { modalComponent, showModal } = useContext(ModalContext);
   const { clearUploads } = useContext(FilesContext);
   const [srcSet, setSrcSet] = useState([]);
   const [files, setFiles] = useState([]);
@@ -99,7 +99,7 @@ const PhotoGrid = () => {
   };
 
   const renderButton = () => {
-    if (srcSet.length === 0) {
+    if (!showModal) {
       return (
         <Button
           className="gradient"

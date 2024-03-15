@@ -21,7 +21,15 @@ const getToken = () => auth.currentUser.getIdToken(true);
 const auth = firebase.auth();
 
 const AuthService = {
-  signInAnonimously: () => auth.signInAnonymously(),
+  signInAnonimously: () =>
+    auth
+    .signInAnonymously()
+    .then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+    ,
   signIn: (email, password) =>
     firebase
       .auth()

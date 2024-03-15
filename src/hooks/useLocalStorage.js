@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 export default function useLocalStorage() {
   const [storage, setStorage] = useState({
     loggedIn: false,
-    userId: null
+    userId: null,
+    password: ''
   });
 
   useEffect(() => {
@@ -23,7 +24,8 @@ export default function useLocalStorage() {
 
       setStorage({
         loggedIn: sessionData.loggedIn,
-        userId:  sessionData.userId
+        userId:  sessionData.userId,
+        password: sessionData.password
       });
     } else {
       console.log('session no existe');
@@ -32,8 +34,10 @@ export default function useLocalStorage() {
 
   }
 
-  const saveData = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+  const saveData = (value) => {
+    console.log(value);
+        
+    localStorage.setItem('session', JSON.stringify(value));
     getCurrentLocalStorage();
   }
 

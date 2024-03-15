@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import FilesService from "../services/FilesService";
 import { PostsContext } from "../context/PostsContext";
@@ -15,7 +15,9 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
 
   const { total, uploadedCount, setTotalFiles, fileUploaded } =
     useContext(FilesContext);
+
   const { user, signUp } = useContext(UserContext);
+
   const { savePost } = useContext(PostsContext);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
         handleUpload();
       }
     }
+
     if (user !== null) {
       if (user.name !== null) {
         setName(user.name);
@@ -46,9 +49,11 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
     const promises = [];
     setSpinner(true);
     setTotalFiles(files);
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const formData = FilesService.getFormData(file);
+      
       promises.push(
         new Promise((resolve, reject) => {
           FilesService.postFile(formData)
@@ -62,6 +67,7 @@ const UploadForm = ({ files, srcSet, handleCancel, handleCallback }) => {
         })
       );
     }
+
     Promise.all(promises).then(() => {
       setSpinner(false);
       const postPayload = {
