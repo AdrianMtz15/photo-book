@@ -67,7 +67,7 @@ export const FilesProvider = ({ children }) => {
 
   const saveFile = (file, callback) => {
     dispatch({ type: SHOW_SPINNER });
-    let service = FilesService.putFile;
+    let service = FilesService.postFile;
     if (isNaN(parseInt(file.file_id))) {
       service = FilesService.postFile;
     }

@@ -40,10 +40,10 @@ const Main = () => {
 
   return (
     <div>
-      {/* <Landing /> */}
+      <Landing />
       {renderTabs()}
       {renderContent()}
-      {/* <MobileModal /> */}
+      <MobileModal />
     </div>
   );
 };
