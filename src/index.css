@@ -1,11 +1,9 @@
-
 body {
   margin: 0;
   background-color: whitesmoke;
   display: block;
   position: relative;
 }
-
 
 * {
   margin: 0;
@@ -14,11 +12,14 @@ body {
 }
 
 .gradient {
-  background: rgb(131,85,41);
-  background: linear-gradient(90deg, rgba(131,85,41,1) 0%, rgba(253,193,105,1) 100%);
+  background: rgb(131, 85, 41);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 85, 41, 1) 0%,
+    rgba(253, 193, 105, 1) 100%
+  );
   border: none !important;
 }
-
 
 .text-gradient {
   fill: linear-gradient(
@@ -301,7 +302,6 @@ html {
   background: #fff;
   padding-bottom: 0px;
   min-height: calc(100vh - 65px - 73px);
-
 }
 
 .logo-footer {
@@ -459,7 +459,6 @@ html {
   text-decoration: none !important;
 }
 
-
 .select-image {
   position: absolute;
   left: 0;
@@ -593,18 +592,18 @@ html {
 }
 
 .hover-shadow:hover {
-  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 td {
   min-width: 125px;
 }
 
-.table> :not(caption)>*>* {
+.table > :not(caption) > * > * {
   padding: 10px 12px;
 }
 
-.table> :not(:last-child)> :last-child>* {
+.table > :not(:last-child) > :last-child > * {
   border-bottom: inherit;
 }
 
@@ -657,7 +656,6 @@ th {
 }
 
 @media (min-width: 767px) {
-
   .resp-calendar {
     display: none;
   }
@@ -731,4 +729,14 @@ th {
   .mobile-center * {
     text-align: center !important;
   }
+}
+
+ion-segment-button {
+  --color: "black";
+  --color-checked: #872d2d;
+  --indicator-color: linear-gradient(
+    90deg,
+    rgba(131, 85, 41, 1) 0%,
+    rgba(253, 193, 105, 1) 100%
+  );
 }
