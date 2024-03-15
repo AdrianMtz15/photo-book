@@ -1,4 +1,11 @@
-import { Box, Button, ImageList, ImageListItem } from "@mui/material";
+import {
+  Box,
+  Button,
+  ImageList,
+  ImageListItem,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useContext, useState, useEffect } from "react";
 import { PostsContext } from "../context/PostsContext";
@@ -24,18 +31,22 @@ const VisuallyHiddenInput = styled("input")({
 const PhotoGrid = () => {
   const { posts, getPosts } = useContext(PostsContext);
   const { modalComponent, showModal } = useContext(ModalContext);
-  const { clearUploads, srcSet, setSrcSet, inputFiles, setInputFiles, getFiles, files } = useContext(FilesContext);
+  const {
+    clearUploads,
+    srcSet,
+    setSrcSet,
+    inputFiles,
+    setInputFiles,
+    getFiles,
+    files,
+  } = useContext(FilesContext);
   const [page, setPage] = useState(0);
-  
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     fetchPosts();
     getFiles();
   }, [page]);
-
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
 
   useEffect(() => {
     if (srcSet.length > 0) {
@@ -46,6 +57,14 @@ const PhotoGrid = () => {
   useEffect(() => {
     handleFilesPreview();
   }, [inputFiles]);
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const handleClose = () => {
+    setSelectedImage(null);
+  };
 
   const fetchPosts = () => getPosts({ page });
 
@@ -130,14 +149,21 @@ const PhotoGrid = () => {
 
   const renderPosts = () => {
     if (Array.isArray(files) && files.length > 0) {
+      console.log("🚀: renderPosts -> files", files);
       return (
-        <ImageList variant="masonry" cols={3} gap={8} sx={{ paddingX: "10px" }}>
+        <ImageList
+          variant="masonry"
+          cols={3}
+          gap={8}
+          sx={{ paddingX: "10px", paddingTop: "1rem" }}
+        >
           {files.map((item) => (
             <ImageListItem
               key={item.file_id}
               style={{
                 borderRadius: "5px",
               }}
+              onClick={() => handleImageClick(item)}
             >
               <img
                 srcSet={`${S3_ENDPOINT}/${item.name}.${item.type}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -180,7 +206,23 @@ const PhotoGrid = () => {
     >
       {renderPosts()}
       {/* {renderFiles()} */}
+
       {renderButton()}
+      <Dialog open={!!selectedImage} onClose={handleClose}>
+        <DialogContent>
+          {selectedImage && (
+            <>
+              <img
+                src={`${S3_ENDPOINT}/${selectedImage.name}.${selectedImage.type}?w=248&fit=crop&auto=format`}
+                alt={selectedImage.name}
+                style={{ maxHeight: "700px" }}
+              />
+              <h6>{selectedImage?.post?.content}</h6>
+              <p>- {selectedImage?.user?.name}</p>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
