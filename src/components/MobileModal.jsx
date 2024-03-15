@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
-import { IonContent, IonGrid, IonHeader, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
+import { IonButton, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
 import ProgressBar from "./ProgressBar";
 
 const MobileModal = () => {
@@ -13,7 +13,6 @@ const MobileModal = () => {
     component,
     children,
     clearModal,
-    onCancel,
     showModal,
   } = useContext(ModalContext);
 
@@ -32,10 +31,9 @@ const MobileModal = () => {
 
 
   const handleCancel = () => {
+    console.log('handle cancel');
     clearModal();
-    if (typeof onCancel === "function") {
-      onCancel();
-    }
+
   };
 
   const handleNameChange = (event) => {
@@ -58,16 +56,15 @@ const MobileModal = () => {
     <IonModal
       isOpen={showModal}
       initialBreakpoint={0.9}
-      breakpoints={[0.9, 0.95]}
-      onDidDismiss={handleCancel}
+      breakpoints={[0.9]}
+      // onDidDismiss={handleCancel}
     >
 
-      <IonContent className="py-4 ps-4 bg-white position-relative overflow-auto">
-        <IonGrid class="h-100  d-flex flex-column pt-4">
+        <IonGrid class="pt-4 overflow-hidden">
 
-          {title && title !== "" ? <h2 className="text-primary h-auto text-center mt-3">{title}</h2> : ""}
+          {title && title !== "" ? <h2 className="text-primary text-center mt-3">{title}</h2> : ""}
 
-          <div className="p-3 pt-0 " style={{flex: 1, overflow: 'auto'}}>
+          <div className="p-3 pt-0 overflow-scroll" style={{flex: 1}}>
             {content}
             {component}
             {children}
@@ -97,7 +94,7 @@ const MobileModal = () => {
             <button
               type="submit"
               disabled={spinner}
-              className="gradient btn text-white text-capitalize fw-bold mt-4 w-50"
+              className="gradient btn text-white text-capitalize fw-bold mt-4 w-100"
         
             >
               {spinner ? <div className="spinner-border" /> : "SUBIR"}
@@ -106,14 +103,15 @@ const MobileModal = () => {
             <button
               type="button"
               disabled={spinner}
-              onClick={handleCancel}
-              className="btn text-muted w-50 my-3"
+              onClick={() => {
+                console.log('cancel');
+              }}
+              className="btn text-muted w-100 my-3"
             >
-              Cancelar
+              Cancel
             </button>
           </div>
         </IonGrid>
-      </IonContent>
     </IonModal>
     </>
     

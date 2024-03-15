@@ -19,6 +19,30 @@ body {
   border: none !important;
 }
 
+#ion-react-wrapper {
+  overflow: hidden !important;
+
+}
+
+ion-content {
+  height: 90vh;
+  max-height: 90vh;
+  overflow: hidden !important;
+}
+
+ion-content:host {
+  height: 90vh;
+  max-height: 90vh;
+  --overflow: hidden !important;
+}
+
+ion-grid {
+  height: 90vh;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden !important;
+}
 
 .text-gradient {
   fill: linear-gradient(
