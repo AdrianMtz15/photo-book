@@ -35,8 +35,10 @@ const ModalReducer = function (state, { type, payload }) {
       };
     case CLEAR_MODAL:
       if (state.show || state.showModal) {
-        hideModal();
+        // hideModal();
       }
+      console.log('clear modal');
+      
       return {
         ...state,
         show: false,
