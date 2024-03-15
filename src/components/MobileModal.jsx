@@ -1,6 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
-import { IonApp, IonButton, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonList, IonModal, IonTextarea } from "@ionic/react";
+import {
+  IonApp,
+  IonButton,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonList,
+  IonModal,
+  IonTextarea,
+} from "@ionic/react";
 import ProgressBar from "./ProgressBar";
 import { UserContext } from "../context/UserContext";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -15,26 +26,24 @@ const MobileModal = () => {
   const [needLogin, setNeedLogin] = useState(false);
   const [page, setPage] = useState(0);
 
-
-  const {
-    title,
-    component,
-    clearModal,
-    showModal,
-    total, 
-    uploadedCount, 
-  } = useContext(ModalContext);
+  const { title, component, clearModal, showModal, total, uploadedCount } =
+    useContext(ModalContext);
 
   const { user, signUp } = useContext(UserContext);
-  const { srcSet, setSrcSet, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
+  const {
+    srcSet,
+    setSrcSet,
+    setTotalFiles,
+    inputFiles,
+    fileUploaded,
+    clearUploads,
+  } = useContext(FilesContext);
   const { savePost, getPosts, posts } = useContext(PostsContext);
   const { saveData, storage } = useLocalStorage();
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const fetchPosts = () => getPosts({ page });
-
 
   // useEffect(() => {
   //   if (user !== null && needLogin) {
@@ -51,20 +60,16 @@ const MobileModal = () => {
   //   }
   // }, [user]);
 
-
   const validateName = () => {
-    if(name.length > 0) {
+    if (name.length > 0) {
       return true;
     } else {
       return false;
     }
-  }
+  };
 
   const handleSignUp = async () => {
-    const {
-      token,
-      userId
-    } = await signUp(name);
+    const { token, userId } = await signUp(name);
 
     // saveData({
     //   ...storage,
@@ -73,16 +78,16 @@ const MobileModal = () => {
     // });
 
     return userId;
-  }
+  };
 
   const handleCreatePost = async (userId) => {
     const newPost = await savePost({
       user_id: userId,
-      content
-    })
+      content,
+    });
 
     return newPost;
-  }
+  };
 
   const handleCallback = () => {
     clearUploads();
@@ -99,11 +104,11 @@ const MobileModal = () => {
       const file = inputFiles[i];
       const fileData = {
         user_id,
-        post_id
-      }
+        post_id,
+      };
 
       const formData = FilesService.getFormData(file, fileData);
-      
+
       promises.push(
         new Promise((resolve, reject) => {
           FilesService.postFile(formData)
@@ -120,16 +125,15 @@ const MobileModal = () => {
 
     await Promise.all(promises);
 
-
     handleCallback();
-  }
+  };
 
   const handleSave = async () => {
     let currentUserId;
 
-    if(validateName()) {
-      // setSpinner(true);
-      if(storage.userId === null || storage.userId === undefined) {
+    if (validateName()) {
+      setSpinner(true);
+      if (storage.userId === null || storage.userId === undefined) {
         currentUserId = await handleSignUp();
       } else {
         currentUserId = storage.userId;
@@ -137,7 +141,6 @@ const MobileModal = () => {
 
       const currentPost = await handleCreatePost(currentUserId);
       await handleUpload(currentUserId, currentPost.post_id);
-
     }
   };
 
@@ -174,58 +177,59 @@ const MobileModal = () => {
         leaveAnimation={false}
         onDidDismiss={handleCancel}
       >
+        <IonGrid class="pt-4 overflow-hidden">
+          {title && title !== "" ? (
+            <h2 className="text-primary text-center mt-3">{title}</h2>
+          ) : (
+            ""
+          )}
 
-          <IonGrid class="pt-4 overflow-hidden">
+          <div className="p-3 pt-0 overflow-scroll" style={{ flex: 1 }}>
+            {component}
 
-            {title && title !== "" ? <h2 className="text-primary text-center mt-3">{title}</h2> : ""}
+            <IonList>
+              <IonItem>
+                <IonInput
+                  onIonInput={handleChangeName}
+                  value={name}
+                  label="Nombre del Invitado"
+                  labelPlacement="floating"
+                  type="text"
+                  size={24}
+                />
+              </IonItem>
 
-            <div className="p-3 pt-0 overflow-scroll" style={{flex: 1}}>
-              {component}
+              <IonItem>
+                <IonTextarea
+                  onIonInput={handleChangeContent}
+                  placeholder="Comentario (opcional)"
+                  autoGrow={true}
+                  value={content}
+                  rows={4}
+                ></IonTextarea>
+              </IonItem>
+            </IonList>
 
-              <IonList>
-                <IonItem>
-                  <IonInput 
-                    onIonInput={handleChangeName}
-                    value={name}
-                    label="Nombre del Invitado" 
-                    labelPlacement="floating" 
-                    type="text"
-                    size={24}
-                  />
-                </IonItem>
+            {renderProgress()}
 
-                <IonItem>
-                  <IonTextarea
-                    onIonInput={handleChangeContent}
-                    placeholder="Comentario (opcional)"
-                    autoGrow={true}
-                    value={content}
-                    rows={4}
-                  ></IonTextarea>
-                </IonItem>
-              </IonList>
+            <button
+              type="button"
+              disabled={spinner}
+              onClick={handleSave}
+              className="gradient btn text-white text-capitalize fw-bold mt-4 w-100"
+            >
+              {spinner ? <div className="spinner-border" /> : "SUBIR"}
+            </button>
 
-              {renderProgress()}
-
-              <button
-                type="button"
-                disabled={spinner}
-                onClick={handleSave}
-                className="gradient btn text-white text-capitalize fw-bold mt-4 w-100"
-          
-              >
-                {spinner ? <div className="spinner-border" /> : "SUBIR"}
-              </button>
-              
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="btn text-muted w-100 my-3 z-10"
-              >
-                Cancelar
-              </button>
-            </div>
-          </IonGrid>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="btn text-muted w-100 my-3 z-10"
+            >
+              Cancelar
+            </button>
+          </div>
+        </IonGrid>
       </IonModal>
     </>
   );
