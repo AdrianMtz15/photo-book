@@ -62,16 +62,12 @@ const MobileModal = () => {
       onDidDismiss={handleCancel}
     >
 
-      <IonContent className="py-4 ps-4 bg-white ">
-   
+      <IonContent className="py-4 ps-4 bg-white position-relative overflow-auto">
+        <IonGrid class="h-100  d-flex flex-column pt-4">
 
-        <IonGrid class=" h-100">
+          {title && title !== "" ? <h2 className="text-primary h-auto text-center mt-3">{title}</h2> : ""}
 
-          <IonGrid class="pt-4">
-            {title && title !== "" ? <h2 className="text-primary h-auto text-center">{title}</h2> : ""}
-          </IonGrid>
-          
-          <div className="p-3 pt-0 ">
+          <div className="p-3 pt-0 " style={{flex: 1, overflow: 'auto'}}>
             {content}
             {component}
             {children}
@@ -81,50 +77,42 @@ const MobileModal = () => {
                 <IonInput 
                   label="Nombre del Invitado" 
                   labelPlacement="floating" 
-                  placeholder="Enter text"
                   type="text"
                   size={24}
                 />
               </IonItem>
 
-              {/* <IonItem>
-                <IonInput 
-                  label="Mensaje para los novios" 
-                  labelPlacement="floating" 
-                  placeholder="Enter text"
-                  type="text"
-                  size={24}
-                />
-              </IonItem> */}
-
               <IonItem>
                 <IonTextarea
-                  placeholder="Type something here"
+                  placeholder="Comentario (opcional)"
                   autoGrow={true}
                   value=""
+                  rows={4}
                 ></IonTextarea>
               </IonItem>
             </IonList>
 
             {renderProgress()}
 
-            {/* <IonInput
-              // className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-              type="email"
-              fill="solid"
-              label="Email"
-              labelPlacement="floating"
-              // onIonInput={(event) => validate(event)}
-              // onIonBlur={() => markTouched()}
-            ></IonInput> */}
-          </div>
-
-          
-        </IonGrid>
-
+            <button
+              type="submit"
+              disabled={spinner}
+              className="gradient btn text-white text-capitalize fw-bold mt-4 w-50"
         
-       
-
+            >
+              {spinner ? <div className="spinner-border" /> : "SUBIR"}
+            </button>
+            
+            <button
+              type="button"
+              disabled={spinner}
+              onClick={handleCancel}
+              className="btn text-muted w-50 my-3"
+            >
+              Cancelar
+            </button>
+          </div>
+        </IonGrid>
       </IonContent>
     </IonModal>
     </>
