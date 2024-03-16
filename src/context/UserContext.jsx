@@ -24,6 +24,8 @@ export const UserProvider = ({ children }) => {
       AuthService.setToken(storage.token);
     }
 
+
+
     // dispatch({ type: SHOW_SPINNER });
     // AuthService.userLoggedIn(
     //   () => {

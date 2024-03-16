@@ -68,7 +68,6 @@ export const PostsProvider = ({ children }) => {
       .then((res) => {
         success("Post saved.");
         dispatch({ type: HIDE_SPINNER });
-        clearModal();
         if (typeof callback === "function") {
           callback();
         }

@@ -11,9 +11,11 @@ import {
   IonSegmentButton,
   IonContent,
 } from "@ionic/react";
+import { ModalContext } from "../context/ModalContext";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);
+  const { showModal } = useContext(ModalContext);
 
   const [tab, setTab] = useState("photoGrid");
 
@@ -52,12 +54,18 @@ const Main = () => {
     }
   };
 
+  const renderModal = () => {
+    if(showModal) {
+      return <MobileModal />
+    }
+  }
+
   return (
     <IonApp>
       <Landing />
       {renderTabs()}
       <IonContent>{renderContent()}</IonContent>
-      <MobileModal />
+      {renderModal()}
     </IonApp>
   );
 };

@@ -26,18 +26,23 @@ const MobileModal = () => {
     useContext(ModalContext);
 
   const { user, signUp } = useContext(UserContext);
-  const { getFiles, setSrcSet, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
+  const { getFiles, setSrcSet, srcSet, setInputFiles, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
   const { savePost, getPosts, posts } = useContext(PostsContext);
   const { saveData, storage } = useLocalStorage();
 
 
+  useEffect(() => {
+    console.log(showModal);
+    console.log(srcSet);
+  }, []);
+  
   useEffect(() => {
     if(storage.name && storage.name.length > 0) {
       setName(storage.name);
     }
   }, [storage]);
 
-  const fetchPosts = () => getPosts({ page });
+  // const fetchPosts = () => getPosts({ page });
 
   // useEffect(() => {
   //   if (user !== null && needLogin) {
@@ -87,7 +92,9 @@ const MobileModal = () => {
   const handleCallback = () => {
     clearUploads();
     setSrcSet([]);
+    setInputFiles([]);
     getFiles();
+    clearModal();
   };
 
   const handleUpload = async (user_id, post_id) => {
@@ -140,7 +147,11 @@ const MobileModal = () => {
   };
 
   const handleCancel = () => {
+    clearUploads();
+    setSrcSet([]);
     clearModal();
+    setInputFiles([]);
+
   };
 
   const handleChangeName = (event) => {
@@ -221,7 +232,7 @@ const MobileModal = () => {
               </IonItem>
             </IonList>
 
-            {renderProgress()}
+            {/* {renderProgress()} */}
             
             <button
               type="button"
