@@ -198,6 +198,7 @@ const PhotoGrid = () => {
     <Box
       component={"div"}
       sx={{
+        flex: 1,
         width: "100%",
         position: "relative",
         display: "flex",

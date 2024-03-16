@@ -23,14 +23,22 @@ const Main = () => {
 
   const renderTabs = () => {
     return (
-      <IonSegment value={tab}>
-        <IonSegmentButton value="photoGrid" onClick={() => setTab("photoGrid")}>
-          <IonLabel>Galería de Fotos</IonLabel>
-        </IonSegmentButton>
-        <IonSegmentButton value="instagram" onClick={() => setTab("instagram")}>
-          <IonLabel>Instagram</IonLabel>
-        </IonSegmentButton>
-      </IonSegment>
+      <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+        <IonSegment value={tab}>
+          <IonSegmentButton
+            value="photoGrid"
+            onClick={() => setTab("photoGrid")}
+          >
+            <IonLabel>Galería de Fotos</IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton
+            value="instagram"
+            onClick={() => setTab("instagram")}
+          >
+            <IonLabel>Instagram</IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
+      </div>
     );
   };
 
