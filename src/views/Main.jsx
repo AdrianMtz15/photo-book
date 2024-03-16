@@ -11,11 +11,20 @@ import {
   IonSegmentButton,
   IonContent,
 } from "@ionic/react";
+import { Pagination } from "@mui/material";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);
-
   const [tab, setTab] = useState("photoGrid");
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  useEffect(() => {
+    console.log("🚀: Main -> page", page);
+  }, [page]);
 
   useEffect(() => {
     userLoggedIn();
@@ -44,7 +53,7 @@ const Main = () => {
 
   const renderContent = () => {
     if (tab === "photoGrid") {
-      return <PhotoGrid />;
+      return <PhotoGrid page={page} />;
     }
 
     if (tab === "instagram") {
@@ -56,7 +65,12 @@ const Main = () => {
     <IonApp>
       <Landing />
       {renderTabs()}
-      <IonContent>{renderContent()}</IonContent>
+      <IonContent>
+        {renderContent()}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Pagination count={10} page={page} onChange={handlePageChange} />
+        </div>
+      </IonContent>
       <MobileModal />
     </IonApp>
   );
