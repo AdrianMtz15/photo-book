@@ -11,10 +11,12 @@ import {
   IonSegmentButton,
   IonContent,
 } from "@ionic/react";
-import { Pagination } from "@mui/material";
+import { ModalContext } from "../context/ModalContext";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);
+  const { showModal } = useContext(ModalContext);
+
   const [tab, setTab] = useState("photoGrid");
   const [page, setPage] = useState(1);
 
@@ -61,6 +63,12 @@ const Main = () => {
     }
   };
 
+  const renderModal = () => {
+    if (showModal) {
+      return <MobileModal />;
+    }
+  };
+
   return (
     <IonApp>
       <Landing />
@@ -71,7 +79,7 @@ const Main = () => {
           <Pagination count={10} page={page} onChange={handlePageChange} />
         </div>
       </IonContent>
-      <MobileModal />
+      {renderModal()}
     </IonApp>
   );
 };

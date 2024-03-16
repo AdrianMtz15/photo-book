@@ -46,12 +46,18 @@ const AuthService = {
   userLoggedIn: (success, error) =>
     auth.onAuthStateChanged((user) => {
       if (user) {
-        getToken().then((token) => {
-          api.defaults.headers.common["Authorization"] = token;
-          if (success) success(user);
-        });
+        const handleToken = () => {
+          getToken().then((token) => {
+            api.defaults.headers.common["Authorization"] = token;
+            if (success) success(user);
+          });
+        };
+        
+        setInterval(handleToken, 55 * 60 * 1000);
+
+        handleToken();
       } else {
-        error();
+        // error();
       }
     }),
   signOut: () => auth.signOut(),
@@ -62,6 +68,24 @@ const AuthService = {
   verifyEmail: () => auth.currentUser.sendEmailVerification(),
   updateEmail: (email) => auth.currentUser.updateEmail(email),
   setToken: (token) => (api.defaults.headers.common["Authorization"] = token),
+  setupInterceptors: (callback) => {
+    api.interceptors.response.use(
+      function (response) {
+        return response;
+      },
+      function (error) {
+        if (error.response.data) {
+          if (error.response.data.code) {
+            if (error.response.data.code === "auth/id-token-expired") {
+              callback();
+            }
+          }
+        }
+
+        return Promise.reject(error);
+      }
+    );
+  },
 };
 
 export default AuthService;

@@ -34,7 +34,6 @@ export const FilesProvider = ({ children }) => {
     FilesService.getFiles()
       .then((response) => {
         const { files } = response.data;
-        console.log(files);
         dispatch({ type: FILES_RECEIVED, payload: files });
       })
       .catch((error) => {
@@ -62,6 +61,7 @@ export const FilesProvider = ({ children }) => {
   };
 
   const setSrcSet = (srcArr) => {
+    console.log("🚀 ~ setSrcSet ~ srcArr:", srcArr)
     dispatch({ type: SET_SRC_SET, payload: srcArr });
   };
 

@@ -27,7 +27,7 @@ const ModalReducer = function (state, { type, payload }) {
     case SET_RESPONSE:
       return { ...state, response: payload };
     case MODAL_COMPONENT:
-      console.log(payload);
+      // console.log(payload);
       return {
         ...state,
         showModal: true,
@@ -37,7 +37,6 @@ const ModalReducer = function (state, { type, payload }) {
       if (state.show || state.showModal) {
         // hideModal();
       }
-      console.log('clear modal');
       
       return {
         ...state,
