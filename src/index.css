@@ -757,6 +757,20 @@ th {
 
 ion-segment-button {
   --color: "black";
+  --color-checked:  rgba(253, 193, 105, 1) 100%;
+  --indicator-color: linear-gradient(
+    90deg,
+    rgba(131, 85, 41, 1) 0%,
+    rgba(253, 193, 105, 1) 100%
+  );
+}
+
+.ios .segment-button-checked {
+  color: white !important;
+}
+
+.ios > ion-segment-button {
+  --color: "black";
   --color-checked: #872d2d;
   --indicator-color: linear-gradient(
     90deg,
