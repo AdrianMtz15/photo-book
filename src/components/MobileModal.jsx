@@ -1,11 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../context/ModalContext";
 import {
-  IonApp,
-  IonButton,
-  IonContent,
   IonGrid,
-  IonHeader,
   IonInput,
   IonItem,
   IonList,
@@ -23,25 +19,23 @@ const MobileModal = () => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [spinner, setSpinner] = useState(false);
-  const [needLogin, setNeedLogin] = useState(false);
+  // const [needLogin, setNeedLogin] = useState(false);
   const [page, setPage] = useState(0);
 
   const { title, component, clearModal, showModal, total, uploadedCount } =
     useContext(ModalContext);
 
   const { user, signUp } = useContext(UserContext);
-  const {
-    srcSet,
-    setSrcSet,
-    setTotalFiles,
-    inputFiles,
-    fileUploaded,
-    clearUploads,
-  } = useContext(FilesContext);
+  const { getFiles, setSrcSet, setTotalFiles, inputFiles, fileUploaded, clearUploads } = useContext(FilesContext);
   const { savePost, getPosts, posts } = useContext(PostsContext);
   const { saveData, storage } = useLocalStorage();
 
-  useEffect(() => {}, []);
+
+  useEffect(() => {
+    if(storage.name && storage.name.length > 0) {
+      setName(storage.name);
+    }
+  }, [storage]);
 
   const fetchPosts = () => getPosts({ page });
 
@@ -71,11 +65,12 @@ const MobileModal = () => {
   const handleSignUp = async () => {
     const { token, userId } = await signUp(name);
 
-    // saveData({
-    //   ...storage,
-    //   userId,
-    //   token
-    // });
+    saveData({
+      ...storage,
+      userId,
+      token,
+      name
+    });
 
     return userId;
   };
@@ -92,7 +87,7 @@ const MobileModal = () => {
   const handleCallback = () => {
     clearUploads();
     setSrcSet([]);
-    fetchPosts();
+    getFiles();
   };
 
   const handleUpload = async (user_id, post_id) => {
@@ -113,8 +108,6 @@ const MobileModal = () => {
         new Promise((resolve, reject) => {
           FilesService.postFile(formData)
             .then((res) => {
-              const { file_id } = res.data;
-
               fileUploaded(res.data.file);
               resolve();
             })
@@ -141,6 +134,8 @@ const MobileModal = () => {
 
       const currentPost = await handleCreatePost(currentUserId);
       await handleUpload(currentUserId, currentPost.post_id);
+
+      setSpinner(false);
     }
   };
 
@@ -168,6 +163,29 @@ const MobileModal = () => {
     }
   };
 
+  const renderUserName = () => {
+    if(
+      storage.userId !== null 
+      && storage.userId !== undefined
+      && storage.name?.length > 0
+    ) {
+      return (
+        <p className="fz-5">{storage.name}</p>
+      )
+    } else {
+      return(
+        <IonInput 
+          onIonInput={handleChangeName}
+          value={name}
+          label="Nombre del Invitado" 
+          labelPlacement="floating" 
+          type="text"
+          size={24}
+        />
+      )
+    }
+  }
+
   return (
     <>
       <IonModal
@@ -189,14 +207,7 @@ const MobileModal = () => {
 
             <IonList>
               <IonItem>
-                <IonInput
-                  onIonInput={handleChangeName}
-                  value={name}
-                  label="Nombre del Invitado"
-                  labelPlacement="floating"
-                  type="text"
-                  size={24}
-                />
+                {renderUserName()}
               </IonItem>
 
               <IonItem>
@@ -211,7 +222,7 @@ const MobileModal = () => {
             </IonList>
 
             {renderProgress()}
-
+            
             <button
               type="button"
               disabled={spinner}
