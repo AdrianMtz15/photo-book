@@ -4,7 +4,13 @@ import PhotoGrid from "./PhotoGrid";
 import Landing from "./Landing";
 import MobileModal from "../components/MobileModal";
 import InstagramWidget from "./InstagramWidget";
-import { IonApp, IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
+import {
+  IonApp,
+  IonLabel,
+  IonSegment,
+  IonSegmentButton,
+  IonContent,
+} from "@ionic/react";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);
@@ -40,12 +46,12 @@ const Main = () => {
 
   return (
     <IonApp>
-      <div>
-        <Landing />
-        {renderTabs()}
+      <Landing />
+      {renderTabs()}
+      <IonContent>
         {renderContent()}
         <MobileModal />
-      </div>
+      </IonContent>
     </IonApp>
   );
 };
