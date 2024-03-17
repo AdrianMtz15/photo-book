@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { PostsContext } from "../context/PostsContext";
 import { FilesContext } from "../context/FilesContext";
 import { styled } from "@mui/material/styles";
@@ -28,7 +28,7 @@ const VisuallyHiddenInput = styled("input")({
   left: 0,
 });
 
-const PhotoGrid = () => {
+const PhotoGrid = ({ page }) => {
   const { posts, getPosts } = useContext(PostsContext);
   const { modalComponent, showModal } = useContext(ModalContext);
   const {
@@ -40,27 +40,15 @@ const PhotoGrid = () => {
     getFiles,
     files,
   } = useContext(FilesContext);
-  const [page, setPage] = useState(0);
+
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const photoContainer = useRef();
-
   useEffect(() => {
-    window.addEventListener('scroll', handleChangePage)
-  }, []);
-
-  const handleChangePage = (event) => {
-    console.log(event);
-  }
-
-  useEffect(() => {
-    fetchPosts();
-    getFiles();
+    fetchPosts(page);
+    getFiles(page);
   }, [page]);
 
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ srcSet:", srcSet)
-
     if (srcSet.length > 0) {
       modalComponent("Subir Recuerdos", <FilesPreview files={srcSet} />);
     }
@@ -161,7 +149,7 @@ const PhotoGrid = () => {
 
   const renderPosts = () => {
     if (Array.isArray(files) && files.length > 0) {
-      console.log(files.length);
+      console.log("🚀: renderPosts -> files", files);
       return (
         <ImageList
           variant="masonry"
@@ -208,7 +196,6 @@ const PhotoGrid = () => {
 
   return (
     <Box
-      // ref={}
       component={"div"}
       sx={{
         flex: 1,
@@ -216,7 +203,6 @@ const PhotoGrid = () => {
         position: "relative",
         display: "flex",
         justifyContent: "center",
-        paddingBottom: '50px'
       }}
     >
       {renderPosts()}

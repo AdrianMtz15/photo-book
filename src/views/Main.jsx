@@ -12,6 +12,7 @@ import {
   IonContent,
 } from "@ionic/react";
 import { ModalContext } from "../context/ModalContext";
+import { Pagination } from "@mui/material";
 
 const Main = () => {
   const { userLoggedIn } = useContext(UserContext);

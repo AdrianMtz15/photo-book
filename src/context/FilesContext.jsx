@@ -8,7 +8,7 @@ import {
   SET_TOTAL_FILES,
   CLEAR_UPLOADS,
   SET_SRC_SET,
-  SET_INPUT_FILES
+  SET_INPUT_FILES,
 } from "../types/files";
 import { HIDE_SPINNER, SHOW_SPINNER } from "../types";
 import { ModalContext } from "./ModalContext";
@@ -20,7 +20,7 @@ const initialState = {
   file: null,
   total: 0,
   inputFiles: [],
-  srcSet: []
+  srcSet: [],
 };
 
 export const FilesContext = createContext(initialState);
@@ -30,8 +30,8 @@ export const FilesProvider = ({ children }) => {
 
   const { alert, success, clearModal } = useContext(ModalContext);
 
-  const getFiles = () => {
-    FilesService.getFiles()
+  const getFiles = (page) => {
+    FilesService.getFiles(page)
       .then((response) => {
         const { files } = response.data;
         dispatch({ type: FILES_RECEIVED, payload: files });
@@ -61,7 +61,7 @@ export const FilesProvider = ({ children }) => {
   };
 
   const setSrcSet = (srcArr) => {
-    console.log("🚀 ~ setSrcSet ~ srcArr:", srcArr)
+    console.log("🚀 ~ setSrcSet ~ srcArr:", srcArr);
     dispatch({ type: SET_SRC_SET, payload: srcArr });
   };
 
@@ -81,7 +81,7 @@ export const FilesProvider = ({ children }) => {
   const saveFile = (file, callback) => {
     dispatch({ type: SHOW_SPINNER });
     let service = FilesService.postFile;
-    
+
     service(file)
       .then(() => {
         success("File saved.");
@@ -127,7 +127,7 @@ export const FilesProvider = ({ children }) => {
         fileUploaded,
         getSingleFile,
         setTotalFiles,
-        setInputFiles
+        setInputFiles,
       }}
     >
       {children}

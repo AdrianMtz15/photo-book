@@ -9,11 +9,11 @@ export const S3_ENDPOINT = "https://andreayjuanma.s3.us-west-1.amazonaws.com";
 
 export const SOCKET_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:4001"
+    ? "http://localhost:4000"
     : "https://thebodymethod.mx";
 
 export const BASE_URL =
-  (process.env.NODE_ENV === "development" ? "http://localhost:4001" : "") +
+  (process.env.NODE_ENV === "development" ? "http://localhost:4000" : "") +
   "/api";
 
 export const searchRows = (query, rows) => {
@@ -201,8 +201,8 @@ export const getCardType = (number) =>
   String(number) === "3"
     ? "amex"
     : String(number) === "4"
-    ? "visa"
-    : "mastercard";
+      ? "visa"
+      : "mastercard";
 
 export const categories = {
   dance: [11, 12, 13, 15],
